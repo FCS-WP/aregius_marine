@@ -216,7 +216,7 @@ function render_form_slops_and_sludge()
         // ($type, $input_name, $value, $placeholder)
         ['text', 'vessel_information_type', '', 'Type', false],
         ['text', 'vessel_information_dwt', '', 'DWT', false],
-        ['text', 'vessel_information_eta', '', 'ETA', false],
+        ['date', 'vessel_information_eta', '', 'ETA', false],
     );
 
     $requester_info_fields = array(
@@ -346,7 +346,7 @@ function render_eopl_anchoring_guidance()
         // ($type, $input_name, $value, $placeholder)
         ['text', 'vessel_information_type', '', 'Type', false],
         ['text', 'vessel_information_dwt', '', 'DWT', false],
-        ['text', 'vessel_information_eta', '', 'ETA', false],
+        ['date', 'vessel_information_eta', '', 'ETA', false],
     );
 
     $requester_info_fields = array(
