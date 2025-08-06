@@ -126,7 +126,7 @@ function render_form_row_2_col($data, $index)
 
 function render_form_row_3_col($data, $index)
 {
-    list($label_1, $label_2, $placeholder, $input_name, $checkbox_value, $is_required) = $data;
+    list($label_1, $label_2, $placeholder, $input_name, $checkbox_value, $is_required, $col2type) = $data;
 
     $checkbox_id = $input_name . '_' . ($index + 1);
     $qty_input_id = 'dur_' . $checkbox_id;
@@ -152,7 +152,7 @@ function render_form_row_3_col($data, $index)
                 <?php echo esc_html($label_2); ?>:
             </label>
             <input
-                type="text"
+                type="<?php echo $col2type ?>"
                 id="<?php echo esc_attr($qty_input_id); ?>"
                 name="<?php echo esc_attr($qty_input_id); ?>"
                 value=""
@@ -242,7 +242,26 @@ function render_form_slops_and_sludge()
         <input type="hidden" name="form_type" id="form_type" value="enquiry_form">
         <!-- First Section -->
         <div>
+            <h5 class="form-section-title">
+                Location
+            </h5>
             <div class="form-row">
+                <div class="form-col form-col-4">
+                    <?php
+                    foreach ($loaction_fields as $i => $field) {
+                        echo render_checkbox($field, $i);
+                        // Open a new column every 2 items (or 3 if you want 3 per row)
+                        if (($i + 1) % 2 === 0 && $i + 1 < count($loaction_fields)) {
+                            echo '</div><div class="form-col form-col-4">';
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="form-row mb-0">
                 <div class="form-col form-col-6 flex-center">
                     <h5 class="form-section-title">Type of Slops and Sludge</h5>
                 </div>
@@ -288,25 +307,6 @@ function render_form_slops_and_sludge()
             </div>
         </div>
 
-        <div>
-            <h5 class="form-section-title">
-                Location
-            </h5>
-            <div class="form-row">
-                <div class="form-col form-col-4">
-                    <?php
-                    foreach ($loaction_fields as $i => $field) {
-                        echo render_checkbox($field, $i);
-                        // Open a new column every 2 items (or 3 if you want 3 per row)
-                        if (($i + 1) % 2 === 0 && $i + 1 < count($loaction_fields)) {
-                            echo '</div><div class="form-col form-col-4">';
-                        }
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-
         <div class="form-row">
 
             <div class="form-col form-col-12">
@@ -335,12 +335,12 @@ function render_eopl_anchoring_guidance()
 {
     $purpose_form_fields = array(
         // ($label_1, $label_2, $placeholder, $input_name, $checkbox_value, $is_required)
-        ['Cargo Tank or Hold Washing', 'Est. Duration (Days)', 'CBM', 'purpose', 'Cargo Tank or Hold Washing', false],
-        ['Gas Freeing', 'Est. Duration (Days)', 'CBM', 'purpose', 'Gas Freeing', false],
-        ['Deslopping', 'Est. Duration (Days)', 'CBM', 'purpose', 'Deslopping', false],
-        ['Awaiting Orders', 'Est. Duration (Days)', 'CBM', 'purpose', 'Awaiting Orders', false],
-        ['Repairs', 'Est. Duration (Days)', 'CBM', 'purpose', 'Repairs', false],
-        ['Others', 'Est. Duration (Days)', 'CBM', 'purpose', 'Others', false],
+        ['Cargo Tank or Hold Washing', 'Est. Duration (Days)', 'CBM', 'purpose', 'Cargo Tank or Hold Washing', false, 'date'],
+        ['Gas Freeing', 'Est. Duration (Days)', 'CBM', 'purpose', 'Gas Freeing', false, 'date'],
+        ['Deslopping', 'Est. Duration (Days)', 'CBM', 'purpose', 'Deslopping', false, 'date'],
+        ['Awaiting Orders', 'Est. Duration (Days)', 'CBM', 'purpose', 'Awaiting Orders', false, 'date'],
+        ['Repairs', 'Est. Duration (Days)', 'CBM', 'purpose', 'Repairs', false, 'date'],
+        ['Others', 'Est. Duration (Days)', 'CBM', 'purpose', 'Others', false, 'date'],
     );
     $vessel_information_fields = array(
         // ($type, $input_name, $value, $placeholder)
@@ -362,8 +362,17 @@ function render_eopl_anchoring_guidance()
         <?php wp_nonce_field('submit_enquiry', 'enquiry_nonce'); ?>
         <input type="hidden" name="form_type" id="form_type" value="enquiry_form">
         <!-- First Section -->
+        <div class="form-row">
+            <div class="form-col form-col-12">
+                <h5 class="form-section-title">
+                    Any additional info or requests
+                </h5>
+                <textarea name="additional_requests" id="additional_requests"></textarea>
+            </div>
+        </div>
+
         <div>
-            <div class="form-row">
+            <div class="form-row mb-0">
                 <div class="form-col form-col-4 flex-center">
                     <h5 class="form-section-title">Type of Slops and Sludge</h5>
                 </div>
@@ -407,16 +416,6 @@ function render_eopl_anchoring_guidance()
                         ?>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="form-row">
-
-            <div class="form-col form-col-12">
-                <h5 class="form-section-title">
-                    Any additional info or requests
-                </h5>
-                <textarea name="additional_requests" id="additional_requests"></textarea>
             </div>
         </div>
 
@@ -476,7 +475,7 @@ function render_form_port_agency_service()
         <?php wp_nonce_field('submit_enquiry', 'enquiry_nonce'); ?>
         <input type="hidden" name="form_type" id="form_type" value="enquiry_form">
         <!-- First Section -->
-        <div class="mb-3">
+        <div class="mb-4">
             <div>
                 <h5 class="form-section-title">Type of Attendance</h5>
             </div>
@@ -485,7 +484,6 @@ function render_form_port_agency_service()
                 echo render_checkbox($field_item, $index);
             }
             ?>
-
         </div>
         <!-- End First Section -->
 
@@ -513,22 +511,6 @@ function render_form_port_agency_service()
                         }
                         ?>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <h5 class="form-section-title">
-                Location
-            </h5>
-            <div class="form-row">
-                <div class="form-col form-col-4">
-                    <?php
-                    foreach ($loaction_fields as $i => $field) {
-                        echo render_checkbox($field, $i);
-                        echo '</div><div class="form-col form-col-4">';
-                    }
-                    ?>
                 </div>
             </div>
         </div>
@@ -602,12 +584,11 @@ function render_form_bunker_survey_services()
         <?php wp_nonce_field('submit_enquiry', 'enquiry_nonce'); ?>
         <input type="hidden" name="form_type" id="form_type" value="enquiry_form">
         <!-- First Section -->
-        <div>
-            <div class="form-row">
+        <div class="mb-4">
+            <div class="form-row mb-0">
                 <div class="form-col form-col-6 flex-center">
                     <h5 class="form-section-title">Type of Attendance</h5>
                 </div>
-
             </div>
 
             <?php
@@ -615,7 +596,6 @@ function render_form_bunker_survey_services()
                 echo render_checkbox($field_item, $index);
             }
             ?>
-
         </div>
         <!-- End First Section -->
 
