@@ -90,7 +90,8 @@ function render_form_row_2_col($data, $index)
     list($label_1, $label_2, $placeholder, $input_name, $checkbox_value, $is_required) = $data;
 
     $checkbox_id = $input_name . '_' . ($index + 1);
-    $qty_input_id = 'qty_' . $checkbox_id;
+    $checkbox_slug = create_slug($checkbox_value);
+    $qty_input_id = 'quantity_of_' . $checkbox_slug;
     $required_attr = $is_required ? 'required' : '';
 
     ob_start();
@@ -129,8 +130,9 @@ function render_form_row_3_col($data, $index)
     list($label_1, $label_2, $placeholder, $input_name, $checkbox_value, $is_required, $col2type) = $data;
 
     $checkbox_id = $input_name . '_' . ($index + 1);
-    $qty_input_id = 'dur_' . $checkbox_id;
-    $additonal_id = 'add_' . $checkbox_id;
+    $checkbox_slug = create_slug($checkbox_value);
+    $qty_input_id = 'duration_of_' . $checkbox_slug;
+    $additonal_id = 'additional_info_of_' . $checkbox_slug;
     $required_attr = $is_required ? 'required' : '';
 
     ob_start();
