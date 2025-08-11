@@ -182,7 +182,9 @@ function render_input_text($data, $index, $readonly = false)
     list($type, $input_name, $value, $placeholder, $required) = $data;
     $is_required = $required ? 'required' : '';
     $is_readonly = $readonly ? 'readonly' : '';
-    echo ('<input class="custom-input" type="' . $type . '" id="' . $input_name . '" name="' . $input_name . '" value="' . $value . '" placeholder="' . $placeholder . '" ' . $is_required . ' ' . $is_readonly . '>');
+    $trigger_date = $type == 'text/date' ? 'trigger-input-type' : '';
+    $type = $type == 'text/date' ? 'text' : $type;
+    echo ('<input class="custom-input ' . $trigger_date . '" type="' . $type . '" id="' . $input_name . '" name="' . $input_name . '" value="' . $value . '" placeholder="' . $placeholder . '" ' . $is_required . ' ' . $is_readonly . '>');
 }
 
 function render_checkbox($data, $index)
@@ -218,7 +220,7 @@ function render_form_slops_and_sludge()
         // ($type, $input_name, $value, $placeholder)
         ['text', 'vessel_information_type', '', 'Type', false],
         ['text', 'vessel_information_dwt', '', 'DWT', false],
-        ['date', 'vessel_information_eta', '', 'ETA', false],
+        ['text/date', 'vessel_information_eta', '', 'Vessel\'s ETA', false],
     );
 
     $requester_info_fields = array(
@@ -337,18 +339,18 @@ function render_eopl_anchoring_guidance()
 {
     $purpose_form_fields = array(
         // ($label_1, $label_2, $placeholder, $input_name, $checkbox_value, $is_required)
-        ['Cargo Tank or Hold Washing', 'Est. Duration (Days)', 'CBM', 'purpose', 'Cargo Tank or Hold Washing', false, 'date'],
-        ['Gas Freeing', 'Est. Duration (Days)', 'CBM', 'purpose', 'Gas Freeing', false, 'date'],
-        ['Deslopping', 'Est. Duration (Days)', 'CBM', 'purpose', 'Deslopping', false, 'date'],
-        ['Awaiting Orders', 'Est. Duration (Days)', 'CBM', 'purpose', 'Awaiting Orders', false, 'date'],
-        ['Repairs', 'Est. Duration (Days)', 'CBM', 'purpose', 'Repairs', false, 'date'],
-        ['Others', 'Est. Duration (Days)', 'CBM', 'purpose', 'Others', false, 'date'],
+        ['Cargo Tank or Hold Washing', 'Est. Duration (Days)', 'No. of Days', 'purpose', 'Cargo Tank or Hold Washing', false, 'number'],
+        ['Gas Freeing', 'Est. Duration (Days)', 'No. of Days', 'purpose', 'Gas Freeing', false, 'number'],
+        ['Deslopping', 'Est. Duration (Days)', 'No. of Days', 'purpose', 'Deslopping', false, 'number'],
+        ['Awaiting Orders', 'Est. Duration (Days)', 'No. of Days', 'purpose', 'Awaiting Orders', false, 'number'],
+        ['Repairs', 'Est. Duration (Days)', 'No. of Days', 'purpose', 'Repairs', false, 'number'],
+        ['Others', 'Est. Duration (Days)', 'No. of Days', 'purpose', 'Others', false, 'number'],
     );
     $vessel_information_fields = array(
         // ($type, $input_name, $value, $placeholder)
         ['text', 'vessel_information_type', '', 'Type', false],
         ['text', 'vessel_information_dwt', '', 'DWT', false],
-        ['date', 'vessel_information_eta', '', 'ETA', false],
+        ['text/date', 'vessel_information_eta', '', 'Vessel\'s ETA', false],
     );
 
     $requester_info_fields = array(
@@ -455,7 +457,7 @@ function render_form_port_agency_service()
         ['text', 'vessel_information_grt', '', 'GRT', false],
         ['text', 'vessel_information_nrt', '', 'NRT', false],
         ['text', 'vessel_information_dwt', '', 'DWT', false],
-        ['date', 'vessel_information_eta', '', 'ETA', false],
+        ['text/date', 'vessel_information_eta', '', 'Vessel\'s ETA', false],
     );
 
     $requester_info_fields = array(
@@ -560,7 +562,7 @@ function render_form_bunker_survey_services()
         // ($type, $input_name, $value, $placeholder)
         ['text', 'vessel_information_type', '', 'Type', false],
         ['text', 'vessel_information_dwt', '', 'DWT', false],
-        ['date', 'vessel_information_eta', '', 'ETA', false],
+        ['text/date', 'vessel_information_eta', '', 'Vessel\'s ETA', false],
     );
 
     $requester_info_fields = array(
@@ -740,7 +742,7 @@ function render_form_tank_cleaning()
         // ($type, $input_name, $value, $placeholder)
         ['text', 'vessel_information_type', '', 'Type', false],
         ['text', 'vessel_information_dwt', '', 'DWT', false],
-        ['date', 'vessel_information_eta', '', 'ETA', false],
+        ['text/date', 'vessel_information_eta', '', 'Vessel\'s ETA', false],
         ['text', 'vessel_information_location', 'Singapore', '', false],
     );
 
@@ -934,7 +936,7 @@ function render_form_cargo_hold_cleaning()
         // ($type, $input_name, $value, $placeholder)
         ['text', 'vessel_information_type', '', 'Type', false],
         ['text', 'vessel_information_dwt', '', 'DWT', false],
-        ['date', 'vessel_information_eta', '', 'ETA', false],
+        ['text/date', 'vessel_information_eta', '', 'Vessel\'s ETA', false],
         ['text', 'vessel_information_location', 'Singapore', '', false],
     );
 
@@ -1091,7 +1093,7 @@ function render_form_under_water_boat()
         ['text', 'vessel_information_type', '', 'Type', false],
         ['text', 'vessel_information_grt', '', 'GRT', false],
         ['text', 'vessel_information_dwt', '', 'DWT', false],
-        ['date', 'vessel_information_eta', '', 'ETA', false],
+        ['text/date', 'vessel_information_eta', '', 'Vessel\'s ETA', false],
     );
 
     $requester_info_fields = array(
